@@ -14,9 +14,9 @@ import {
   useListPageFilter,
 } from '@openshift-console/dynamic-plugin-sdk';
 import { ErrorState } from '@patternfly/react-component-groups';
-import { EmptyState, EmptyStateBody, Flex, FlexItem, Spinner, Title } from '@patternfly/react-core';
+import { Button, EmptyState, EmptyStateBody, Flex, FlexItem, Spinner, Title } from '@patternfly/react-core';
 import { DataViewTh, DataViewTr } from '@patternfly/react-data-view/dist/esm/DataViewTable';
-import { CubesIcon } from '@patternfly/react-icons';
+import { CubesIcon, WandMagicSparklesIcon } from '@patternfly/react-icons';
 import { Tbody, Td, ThProps, Tr } from '@patternfly/react-table';
 
 import { useApplicationActionsProvider } from '../..//hooks/useApplicationActionsProvider';
@@ -448,7 +448,34 @@ const useApplicationRowsDV = (applicationsList, namespace): DataViewTr[] => {
       },
       {
         id: app.status?.health?.status,
-        cell: <HealthStatusFragment status={app.status?.health?.status || HealthStatus.UNKNOWN} />,
+        cell: (() => {
+          const healthStatus = app.status?.health?.status || HealthStatus.UNKNOWN;
+          const showAiButton =
+            healthStatus === HealthStatus.DEGRADED || healthStatus === HealthStatus.UNKNOWN;
+          return (
+            <div>
+              <HealthStatusFragment status={healthStatus} />
+              {showAiButton && (
+                <Button
+                  variant="link"
+                  isInline
+                  icon={<WandMagicSparklesIcon />}
+                  onClick={() =>
+                    // eslint-disable-next-line no-console
+                    console.log(
+                      'AI recommendation clicked for app:',
+                      app.metadata.name,
+                      'health:',
+                      healthStatus,
+                    )
+                  }
+                >
+                  View AI recommendation
+                </Button>
+              )}
+            </div>
+          );
+        })(),
       },
       {
         id: app?.status?.sync?.revision,
