@@ -16,7 +16,7 @@ import {
 import { ErrorState } from '@patternfly/react-component-groups';
 import { Button, EmptyState, EmptyStateBody, Flex, FlexItem, Spinner, Title } from '@patternfly/react-core';
 import { DataViewTh, DataViewTr } from '@patternfly/react-data-view/dist/esm/DataViewTable';
-import { CubesIcon, WandMagicSparklesIcon } from '@patternfly/react-icons';
+import { CubesIcon, HandSparklesIcon } from '@patternfly/react-icons';
 import { Tbody, Td, ThProps, Tr } from '@patternfly/react-table';
 
 import { useApplicationActionsProvider } from '../..//hooks/useApplicationActionsProvider';
@@ -459,7 +459,7 @@ const useApplicationRowsDV = (applicationsList, namespace): DataViewTr[] => {
                 <Button
                   variant="link"
                   isInline
-                  icon={<WandMagicSparklesIcon />}
+                  icon={<HandSparklesIcon />}
                   onClick={() =>
                     // eslint-disable-next-line no-console
                     console.log(
