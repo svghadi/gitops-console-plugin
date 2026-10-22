@@ -450,25 +450,19 @@ const useApplicationRowsDV = (applicationsList, namespace): DataViewTr[] => {
         id: app.status?.health?.status,
         cell: (() => {
           const healthStatus = app.status?.health?.status || HealthStatus.UNKNOWN;
-          const showAiButton =
-            healthStatus === HealthStatus.DEGRADED || healthStatus === HealthStatus.UNKNOWN;
+          const diagnosisRun = app.metadata.annotations?.['gitops.openshift.io/diagnosis-run'];
+          const diagnosisState = app.metadata.annotations?.['gitops.openshift.io/diagnosis-state'];
+          const showAiLink = diagnosisRun && diagnosisState !== 'closed';
           return (
             <div>
               <HealthStatusFragment status={healthStatus} />
-              {showAiButton && (
+              {showAiLink && (
                 <Button
                   variant="link"
                   isInline
+                  component="a"
+                  href={`/lightspeed/runs/${diagnosisRun}`}
                   icon={<HandSparklesIcon />}
-                  onClick={() =>
-                    // eslint-disable-next-line no-console
-                    console.log(
-                      'AI recommendation clicked for app:',
-                      app.metadata.name,
-                      'health:',
-                      healthStatus,
-                    )
-                  }
                 >
                   View AI recommendation
                 </Button>

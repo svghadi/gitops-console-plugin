@@ -145,6 +145,22 @@ const ApplicationDetailsTab: React.FC<ApplicationDetailsTabProps> = ({ obj }) =>
                   <HealthStatus status={obj.status?.health?.status || ''} />
                 </DetailsDescriptionGroup>
 
+                {(() => {
+                  const diagnosisRun = obj.metadata.annotations?.['gitops.openshift.io/diagnosis-run'];
+                  const diagnosisState = obj.metadata.annotations?.['gitops.openshift.io/diagnosis-state'];
+                  if (!diagnosisRun || diagnosisState === 'closed') return null;
+                  return (
+                    <DetailsDescriptionGroup
+                      title={t('AI Diagnosis')}
+                      help={t('Link to the AI recommendation for this application.')}
+                    >
+                      <a href={`/lightspeed/runs/${diagnosisRun}`}>
+                        View AI recommendation
+                      </a>
+                    </DetailsDescriptionGroup>
+                  );
+                })()}
+
                 <DetailsDescriptionGroup
                   title={t('Current Sync Status')}
                   help={t(
