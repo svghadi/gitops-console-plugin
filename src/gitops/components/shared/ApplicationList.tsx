@@ -461,7 +461,7 @@ const useApplicationRowsDV = (applicationsList, namespace): DataViewTr[] => {
                   variant="link"
                   isInline
                   component="a"
-                  href={`/lightspeed/runs/${diagnosisRun}`}
+                  href={`/lightspeed/runs/openshift-lightspeed/${diagnosisRun}`}
                   icon={<HandSparklesIcon />}
                 >
                   View AI recommendation

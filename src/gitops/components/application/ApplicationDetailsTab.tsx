@@ -154,7 +154,7 @@ const ApplicationDetailsTab: React.FC<ApplicationDetailsTabProps> = ({ obj }) =>
                       title={t('AI Diagnosis')}
                       help={t('Link to the AI recommendation for this application.')}
                     >
-                      <a href={`/lightspeed/runs/${diagnosisRun}`}>
+                      <a href={`/lightspeed/runs/openshift-lightspeed/${diagnosisRun}`}>
                         View AI recommendation
                       </a>
                     </DetailsDescriptionGroup>
